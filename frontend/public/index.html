@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Diffie-Hellman Key Exchange</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class=" bg-[#E5E7EB] flex items-center justify-center min-h-screen p-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl">
+
+      <!-- Alice Column -->
+      <div class="bg-white p-9 rounded-xl border border-grey">
+        <h2 class="text-xl font-bold text-gray-700 text-center">Alice</h2>
+        <div class="mt-4">
+          <form action="/submit" method="post">
+            <label for="alicePrivateKey" class="block font-medium" placeholder="sdfgsdf">Private Key:</label>
+            <input
+              type="number"
+              name="alicePrivateKeyInput"
+              id="alicePrivateKeyInput"
+              class="w-full p-2 border border-gray-300 rounded-md"
+              required/>
+          </form>
+        </div>
+        <div class="mt-4 p-4 rounded-md">
+          <h3 class="text-md font-regular text-gray-800">
+            Public Key Formula:
+          </h3>
+          <p class="text-gray-700">A = g<sup>a</sup> mod p</p>
+          <p class="text-gray-700 pt-4">
+            <strong>Public Key:</strong> <h1><span id="alicePublicKey"></span></h1>
+          </p>
+        </div>
+        <div class="mt-4 p-4 rounded-md ">
+          <h3 class="text-md font-regular text-gray-800">
+            Shared Secret Formula:
+          </h3>
+          <p class="text-gray-700">S = B<sup>a</sup> mod p</p>
+          <p class="text-gray-700 pt-4">
+            <strong>Secret key:</strong> <h1><span id="aliceSharedSecret"></span></h1>
+          </p>
+        </div>
+      </div>
+
+      <!-- Center Column for Agreed Values and Button -->
+      <div class=" border border-grey bg-white p-9 rounded-xl  flex flex-col  items-center">
+        <form action="/submit" method="post">
+          <h2 class="text-xl font-bold text-gray-700 text-center pb-10"> 
+            Agreed Values
+          </h2>
+          <div class="mt-4 w-full">
+            <label for="agreedG" class="block font-medium"
+              >Agreed Generator (g):</label
+            >
+            <input
+              type="number"
+              name="agreedGInput"
+              id="agreedGInput"
+              class="w-full p-2 border border-gray-300 rounded-md"
+              required
+            />
+          </div>
+          <div class="mt-4 w-full">
+            <label for="agreedPrimeNumber" class="block font-medium"
+              >Agreed Prime Number (p):</label
+            >
+            <input
+              type="number"
+              name="agreedPrimeNumberInput"
+              id="agreedPrimeNumberInput"
+              class="w-full p-2 border border-gray-300 rounded-md"
+              required
+            />
+          </div>
+          <button
+            id="calculate"
+            class="mt-6 w-full bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-md transition"
+          >
+            Calculate Shared Secret
+          </button>
+        </form>
+      </div>
+
+      <!-- Bob Column -->
+      <div class="bg-white p-9 rounded-xl border border-grey">
+        <h2 class="text-xl font-bold text-gray-700 text-center">Bob</h2>
+        <div class="mt-4">
+          <form action="/submit" method="post">
+            <label for="bobPrivateKey" class="block font-medium">Private Key:</label>
+            <input
+              type="number"
+              name="bobPrivateKeyInput"
+              id="bobPrivateKeyInput"
+              class="w-full p-2 border border-gray-300 rounded-md"
+              required
+            />
+          </form>
+        </div>
+        <div class="mt-4 p-4 rounded-md ">
+          <h3 class="text-md font-regular text-gray-800">
+            Public Key Formula:
+          </h3>
+          <p class="text-gray-700">B = g<sup>b</sup> mod p</p>
+          <p class="text-gray-700 pt-4">
+            <strong>Public Key:</strong> <h1><span id="bobPublicKey"></span></h1>
+          </p>
+        </div>
+        <div class="mt-4 p-4 rounded-md ">
+          <h3 class="text-md font-regular text-gray-800">
+            Shared Secret Formula:
+          </h3>
+          <p class="text-gray-700">S = A<sup>b</sup> mod p</p>
+          <p class="text-gray-700 pt-4">
+            <strong>Secret key:</strong> <h1><span id="bobSharedSecret"></span></h1>
+          </p>
+        </div>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>

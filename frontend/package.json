@@ -1,0 +1,21 @@
+{
+  "name": "diffie-hellman-frontend",
+  "version": "1.0.0",
+  "description": "Frontend interface for the Diffie-Hellman key exchange implementation.",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "live-server public",
+    "build": "webpack --mode production"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "flowbite": "^3.1.2"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.1",
+    "webpack": "^5.24.4",
+    "webpack-cli": "^4.5.0"
+  },
+  "author": "Your Name",
+  "license": "MIT"
+}
