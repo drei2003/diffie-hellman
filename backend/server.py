@@ -16,6 +16,17 @@ def is_prime(n):
         i += 2
     return True
 
+# Check if g is a generator of P (primitive root modulo P)
+def is_generator(g, P):
+    if g <= 1 or g >= P:
+        return False
+    # We check if g^k % P covers all values 1 to P-1 (this is the definition of a generator)
+    seen = set()
+    for k in range(1, P):
+        seen.add(pow(g, k, P))
+    # If seen contains all numbers from 1 to P-1, g is a generator
+    return len(seen) == P - 1
+
 # Compute public key
 def calculatePublicKey(privateKey, agreedG, agreedPrimeNumber):
     return (agreedG ** privateKey) % agreedPrimeNumber
@@ -53,9 +64,11 @@ class RequestHandler(BaseHTTPRequestHandler):
             agreedG = int(data["agreedG"])
             agreedPrimeNumber = int(data["agreedPrimeNumber"])
 
-            # Validate prime number
+            # Validate prime number and generator
             if agreedG >= agreedPrimeNumber or not is_prime(agreedPrimeNumber):
                 response = {"message": "Invalid Prime Number (P must be prime and greater than G)"}
+            elif not is_generator(agreedG, agreedPrimeNumber):
+                response = {"message": "Invalid generator (G is not a generator of P)"}
             else:
                 # Calculate keys and shared secrets
                 alicePublicKey = calculatePublicKey(alicePrivateKey, agreedG, agreedPrimeNumber)
@@ -70,7 +83,7 @@ class RequestHandler(BaseHTTPRequestHandler):
                         "bobPrivateKey": bobPrivateKey,
                         "alicePublicKey": alicePublicKey,
                         "bobPublicKey": bobPublicKey
-                        }
+                    }
                 else:
                     response = {"message" : "Shared secret mismatch!"}
 
